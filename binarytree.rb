@@ -69,6 +69,9 @@ class Node
     @right_child = new_child
   end
 
+  def to_s
+    "value: #{value}, parent: #{parent}, left child: #{left_child}, right child: #{right_child}"
+  end
   private
   
 end
