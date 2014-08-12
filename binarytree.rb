@@ -10,26 +10,26 @@ class Tree
   def build_tree(values)
     values.shuffle!
     values.each do |value|
-      add_node(value)
+      add_node(value, @root_node)
     end
   end
   
   private
   
-  def add_node(current_node = nil, value)
+  def add_node(value, current_node = nil)
     if @root_node == nil 
       @root_node = Node.new(value)
     elsif value <= current_node.value
       if current_node.left_child == nil
         current_node.left_child = Node.new(value, {parent: current_node})
       else
-        add_node(current_node.left_child, value)
+        add_node(value, current_node.left_child)
       end
     elsif value >= current_node.value
       if current_node.right_child == nil
         current_node.right_child = Node.new(value, {parent: current_node})
       else
-        add_node(current_node.right_child, value)
+        add_node(value, current_node.right_child)
       end
     end
     
