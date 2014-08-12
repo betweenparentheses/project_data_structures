@@ -110,3 +110,6 @@ class Node
   
 end
 
+#test script
+t = Tree.new([1, 3, 66, 3, 93, 56, 74, 88, 2, 17])
+puts t.breadth_first_search(66)
