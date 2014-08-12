@@ -58,7 +58,7 @@ class Node
   
   
   def right_child
-    @right_child
+    @right_child 
   end
   
   def left_child=(new_child)
@@ -70,7 +70,16 @@ class Node
   end
 
   def to_s
-    "value: #{value}, parent: #{parent}, left child: #{left_child}, right child: #{right_child}"
+    if parent
+      parent_value = parent.value
+    end
+    if left_child
+      left_value = left_child.value
+    end
+    if right_child
+      right_value = right_child.value
+    end
+    "value: #{value}, parent: #{parent_value||'none'}, left child: #{left_value||'none'}, right child: #{right_value||'none'}"
   end
   private
   
