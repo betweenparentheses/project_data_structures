@@ -13,29 +13,22 @@ class Tree
       add_node(value, @root_node)
     end
   end
-  
-  def breadth_first_search(value)
 
-    #1Enqueue the root node
+#returns the node containing a value via breadth first search. nil if not found  
+  def breadth_first_search(value)
     queue = Array.new
     queue.unshift(@root_node)
 
     until queue.empty?
-      #2Dequeue a node and examine it
       current = queue.pop
-     #    If the element sought is found in this node, quit the search and return a result.
+
       if value == current.value
         return current
       else
-        #    Otherwise enqueue any successors (the direct child nodes) that have not yet been discovered.
         queue.unshift(current.left_child) if current.left_child
         queue.unshift(current.right_child) if current.right_child
       end
-
-    #4If the queue is not empty, repeat from Step 2.
     end
-    
-    #3 If the queue is empty, every node on the graph has been examined – quit the search and return "not found".
     nil
   end
 
