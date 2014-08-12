@@ -38,9 +38,7 @@ class Tree
     #3 If the queue is empty, every node on the graph has been examined – quit the search and return "not found".
     nil
   end
-  
-  end
-  
+
   private
   
   def add_node(value, current_node = nil)
