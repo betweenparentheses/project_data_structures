@@ -14,6 +14,8 @@ class Tree
     end
   end
   
+  private
+  
   def add_node(current_node = nil, value)
     if @root_node == nil 
       @root_node = Node.new(value)
