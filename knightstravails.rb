@@ -1,26 +1,14 @@
 
 #Your task is to build a function knight_moves that shows the simplest possible way to get from one square to
 #another by outputting all squares the knight will stop on along the way.
-
 #You can think of the board as having 2-dimensional coordinates.
 #Your function would therefore look like:
 #knight_moves([0,0],[1,2]) == [[0,0],[1,2]]
 #knight_moves([0,0],[3,3]) == [[0,0],[1,2],[3,3]]
 #knight_moves([3,3],[0,0]) == [[3,3],[1,2],[0,0]]
-#1)Put together a script that creates a game board and a knight.
-#2)Treat all the possible moves the knight could make as children in a tree.
-#Don't allow any moves to go off the board.
-#3)Decide which search algorithm is best to use for this case.
-#Hint: one of them could be a potentially infinite series.
-#4)Use the chosen search algorithm to find the shortest path between the starting
-# square (or node) and the ending square. Output what that full path looks like,
-# e.g.:
-#    > knight_moves([3,3],[4,3])
-#    You made it in 3 moves!  Here's your path:
-#    [3,3]
-#    [4,5]
-#    [2,4]
-#    [4,3]
+
+module KnightsTravail
+
 Square = Struct.new(:position, :moves, :parent)
 class Square
   def to_s
@@ -40,6 +28,20 @@ class MoveTree
     possibles.each {|possible| square[:moves] << Square.new(possible, [], square)}
   end
   
+  def find_path_to(target)
+    queue = Array.new
+    queue.unshift(@start_node)
+    until queue.empty?
+      current = queue.pop
+      if target == current[:position]
+        return current
+      else
+        next_moves(current) if current[:moves].empty?
+        current[:moves].each {|move| queue.unshift(move)}
+      end
+    end
+    nil
+  end
   
   private
   
@@ -64,12 +66,32 @@ class MoveTree
     false
   end
 end
-#def knight_moves(start, destination)
 
-#end
-  
-  
-  
-#script to test it
-t = MoveTree.new([6,7])
-p MoveTree.start_node
+#the core method. takes destination and destination as arrays of two-dimensional coordinates from 0 to 7
+
+def knight_moves(start, target)
+  tree = MoveTree.new(start)  
+  destination = tree.find_path_to(target)
+  trace_path_from(destination)
+end
+
+private
+
+def trace_path_from(node)
+  path = []
+  until node.nil?
+    path.unshift node[:position]
+    node = node[:parent]
+  end
+  path
+end
+
+end
+
+include KnightsTravail
+
+#testing
+p knight_moves([0,0],[1,2]) # => [[0,0],[1,2]]
+p knight_moves([0,0],[3,3]) # => [[0,0],[1,2],[3,3]]
+p knight_moves([3,3],[0,0]) # => [[3,3],[1,2],[0,0]]
+p knight_moves([6,7], [3,5]) # => [[6, 7], [4, 6], [2, 7], [3, 5]]
