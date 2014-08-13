@@ -37,7 +37,7 @@ class MoveTree
   
   def next_moves(square)
     possibles = possible_moves(square[:position])
-    possibles.each {|possible| square[:moves] << Square.new(possible, [])
+    possibles.each {|possible| square[:moves] << Square.new(possible, [])}
   end
   
   
