@@ -1,3 +1,5 @@
+require 'set'
+
 class Tree
   attr_reader :root_node
   
@@ -134,10 +136,13 @@ end
 
 #test script
 t = Tree.new([1, 3, 66, 3, 93, 56, 74, 88, 2, 17])
+
+#results here should all be the same. they are.
 print "BREADTH FIRST SEARCH: "
 puts t.breadth_first_search(66)
 print "DEPTH FIRST SEARCH, iterative: "
 puts t.depth_first_search(66)
 print "DEPTH FIRST SEARCH, recursive: "
 puts t.dfs_rec(66)
+
 
