@@ -64,11 +64,6 @@ class MoveTree
     false
   end
 end
-
-include MoveTree
-
-
-
 #def knight_moves(start, destination)
 
 #end
