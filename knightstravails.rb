@@ -21,7 +21,7 @@
 #    [4,5]
 #    [2,4]
 #    [4,3]
-Square = Struct.new(:position, :moves)
+Square = Struct.new(:position, :moves, :parent)
 class Square
   def to_s
     "position: #{position}, moves: #{moves}"
@@ -32,12 +32,12 @@ class MoveTree
   attr_reader :start_node
   
   def initialize(start)
-    @start_node = Square.new(start, [])
+    @start_node = Square.new(start, [], nil)
   end
   
   def next_moves(square)
     possibles = possible_moves(square[:position])
-    possibles.each {|possible| square[:moves] << Square.new(possible, [])}
+    possibles.each {|possible| square[:moves] << Square.new(possible, [], square)}
   end
   
   
