@@ -32,6 +32,26 @@ class Tree
     nil
   end
 
+#returns the node containing a value via depth first search, iteratively. nil if not found  
+  def depth_first_search(value)
+    queue = Array.new
+    queue.push(@root_node)
+    discovered = Set.new
+    until queue.empty?
+      current = queue.pop
+      discovered << current
+      
+      if value == current.value
+        return current
+      else
+        queue.push(current.left_child) if current.left_child && !discovered.include?(current.left_child)
+        queue.push(current.right_child) if current.right_child && !discovered.include?(current.left_child)
+      end
+    end
+    nil
+  end
+
+
   private
   
   def add_node(value, current_node = nil)
@@ -105,4 +125,9 @@ end
 
 #test script
 t = Tree.new([1, 3, 66, 3, 93, 56, 74, 88, 2, 17])
+print "BREADTH FIRST SEARCH: "
 puts t.breadth_first_search(66)
+print "DEPTH FIRST SEARCH, iterative: "
+puts t.depth_first_search(66)
+print "DEPTH FIRST SEARCH, recursive: "
+
