@@ -34,23 +34,32 @@ class Tree
 
 #returns the node containing a value via depth first search, iteratively. nil if not found  
   def depth_first_search(value)
-    queue = Array.new
-    queue.push(@root_node)
+    stack = Array.new
+    stack.push(@root_node)
     discovered = Set.new
-    until queue.empty?
-      current = queue.pop
+    until stack.empty?
+      current = stack.pop
       discovered << current
       
       if value == current.value
         return current
       else
-        queue.push(current.left_child) if current.left_child && !discovered.include?(current.left_child)
-        queue.push(current.right_child) if current.right_child && !discovered.include?(current.left_child)
+        stack.push(current.left_child) if current.left_child && !discovered.include?(current.left_child)
+        stack.push(current.right_child) if current.right_child && !discovered.include?(current.left_child)
       end
     end
     nil
   end
 
+  #recursive depth first search
+  def dfs_rec(value, current_node = @root_node)
+    return current_node if current_node.value == value
+    search_left = dfs_rec(value, current_node.left_child) if current_node.left_child
+    return search_left if search_left
+    search_right = dfs_rec(value, current_node.right_child) if current_node.right_child
+    return search_right if search_right
+    nil
+  end
 
   private
   
@@ -130,4 +139,5 @@ puts t.breadth_first_search(66)
 print "DEPTH FIRST SEARCH, iterative: "
 puts t.depth_first_search(66)
 print "DEPTH FIRST SEARCH, recursive: "
+puts t.dfs_rec(66)
 
